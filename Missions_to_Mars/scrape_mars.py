@@ -13,7 +13,7 @@ def init_browser():
 mars_info = {}
 
 #Get Mars News
-def scrape_news():
+def scrape():
     #Set browser
     browser = init_browser()
 
@@ -28,23 +28,13 @@ def scrape_news():
 
     # Get the title from the URL page
     news_title = soup.find('title')
-    news_title.text.strip()
+    news_title = news_title.text
 
     # Get the first paragraph from the URL
     news_p = soup.find('p')
-    news_p.text.strip()
+    news_p = news_p.text
 
-    #Add new info to Mars dictionary
-    mars_info["news_title"] = news_title
-    mars_info["news_para"] = news_p
 
-    return mars_info
-
-    browser.quit()
-
-def scrape_image():
-    # Set browser
-    browser = init_browser()
 
     # Find the featured image for the second URL
     sec_url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
@@ -62,13 +52,7 @@ def scrape_image():
     #Use f string to combine urls
     img_url = f"https://www.jpl.nasa.gov{img_url}"
 
-    mars_info["img_url"] = img_url
 
-    browser.quit()
-
-    return mars_info
-
-def scrape_facts():
     # Find the facts about Mars using Pandas
     third_url = "https://space-facts.com/mars/"
 
@@ -78,15 +62,8 @@ def scrape_facts():
     mars_table.drop("Earth", inplace=True, axis=1)
 
     #Convert table from pandas to html
-    html_mars_table = mars_table.to_html()
+    mars_facts = mars_table.to_html()
 
-    mars_info["tables"] = html_mars_table
-
-    return mars_info
-
-def scrape_hemi():
-    # Set browser
-    browser = init_browser()
 
     # Find information on Mars's hemispheres
     fourth_url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
@@ -118,11 +95,18 @@ def scrape_hemi():
         image_url = downloads.find("a")["href"]
         hemisphere_image_urls.append({"title": title, "img_url": image_url})
 
-    mars_info["hemi_image_urls"] = hemisphere_image_urls
+
+    #store data in dictionary
+    mars_info = {
+        "news_title": news_title,
+        "news_p" : news_p,
+        "img_url": img_url,
+        "mars_facts": mars_facts,
+        "hemisphere_image_urls": hemisphere_image_urls
+    }
 
     browser.quit()
 
     return mars_info
 
-
-
+print(mars_info)
