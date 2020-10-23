@@ -55,14 +55,17 @@ def scrape():
 
     # Find the facts about Mars using Pandas
     third_url = "https://space-facts.com/mars/"
+    browser.visit(third_url)
 
     # Set up table
     table = pd.read_html(third_url)
     mars_table = table[1]
     mars_table.drop("Earth", inplace=True, axis=1)
+    mars_table.columns = ["Statistics", "Mars"]
+
 
     #Convert table from pandas to html
-    mars_facts = mars_table.to_html()
+    html_mars_table = mars_table.to_html()
 
 
     # Find information on Mars's hemispheres
@@ -101,7 +104,7 @@ def scrape():
         "news_title": news_title,
         "news_p" : news_p,
         "img_url": img_url,
-        "mars_facts": mars_facts,
+        "mars_facts": html_mars_table,
         "hemisphere_image_urls": hemisphere_image_urls
     }
 
@@ -109,4 +112,3 @@ def scrape():
 
     return mars_info
 
-print(mars_info)

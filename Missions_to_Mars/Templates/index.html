@@ -11,7 +11,7 @@
 
 </head>
 <body>
-<!-- Header with primary button to refresh data -->
+<!-- Header with button to refresh data -->
   <div class="container">
       <div class="jumbotron text-center">
         <h1><b>Mission to Mars</b></h1>
@@ -19,7 +19,7 @@
       </div>
   </div>
 
- <!-- New section with latest news -->
+ <!-- Latest news -->
   <div class="row">
       <div class="col-md-12">
         <div class="media">
@@ -33,11 +33,8 @@
       </div>
   </div>
 
-  <!-- New section divided into two columns -->
-  <div class="row">
-
-  <!-- Left Side -->
-  <!-- Row for Featured Mars Image -->
+   <div class="row">
+  <!-- Featured Mars Image -->
     <div class="col-md-8">
       <h3><b>Featured Mars Image</b></h3>
       <img src={{mars_info.img_url}} height=auto width=750px>
@@ -49,31 +46,37 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <h4><b>Mars Facts</b></h4>
-              <p>{{mars_info.table}}</p>
+              <p>{{mars_info.html_mars_table | safe}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+<hr>
 
-  <!-- New Section is divided into a 2x2 panel for Hemisphere Images -->
-  <div class="row" style="margin-top:80px;">
-    <div class="page-header">
-      <h2 class="text-center"><b>Mars Hemispheres</b></h2>
-    </div>
-    <!-- Loop through hemispheres dictionary with images and titles -->
+  <!-- New Section for Hemisphere Images -->
+  <h2 class="text-center"><b>Mars Hemispheres</b></h2>
+<hr>
+ <div class="row">
+   <div class = "cold-md-12">
+    <div class="row">
+    <!-- Loop through hemisphere images and titles-->
     {% for hemisphere in mars_info.hemisphere_image_urls %}
-      <div class="col-md-6">
-        <div class="thumbnail">
-          <img src="{{hemisphere.img_url}}">
+      <div class="col-md-11">
+        <div class="thumbnail" style = "margin: 35px;">
+          <img width="600 px" height="600 px" src="{{hemisphere.img_url}}">
         <div class="caption">
+          <hr>
           <h3><b>{{hemisphere.title}}</b></h3>
+          <hr>
         </div>
       </div>
     {% endfor %}
+      </div>
   </div>
-
+ </div>
+</div>
 
 </body>
 </html>
